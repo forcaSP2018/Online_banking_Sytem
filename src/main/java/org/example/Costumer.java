@@ -21,11 +21,6 @@ public class Costumer extends User {
         System.out.println("Transaction History:");
         account.printTransactionHistory();
     }
-
-    /**
-     *
-     * @param type
-     */
     public void viewTransactionsByType(String type) {
         account.printTransactionsByType(type);
     }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-abstract class Account {
+public abstract class Account {
     protected String accountType;
     protected double balance;
     protected double loanIntrestRate;
@@ -106,8 +106,10 @@ abstract class Account {
             System.out.println("Cannot close account: Balance is not zero.");
             return;
         }
-        closed = true;
-        System.out.println("Account has been closed.");
+        else {
+            closed = true;
+            System.out.println("Account has been closed.");
+        }
     }
 
     /**
