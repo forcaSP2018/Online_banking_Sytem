@@ -10,6 +10,9 @@ abstract class Account {
     protected double balance;
     protected double loanIntrestRate;
     protected List<Transaction> transactions = new ArrayList<>();
+    protected boolean closed = false;
+    protected boolean flaggedForReview = false;
+
 
     public Account(String accountType, double balance, double loanIntrestRate) {
         this.accountType = accountType;
@@ -18,10 +21,31 @@ abstract class Account {
     }
 
     /**
+     * Flags the account for review, typically invoked by a manager during an audit.
+     * Once flagged, the account may be reviewed or closed if conditions are met.
+     */
+    public void flagForReview() {
+        flaggedForReview = true;
+        System.out.println("Account has been flagged for review.");
+    }
+
+    /**
+     *Checks whether the account is currently flagged for review.
+     * @return true if the account is flagged for review; false otherwise.
+     */
+    public boolean isFlaggedForReview() {
+        return flaggedForReview;
+    }
+
+    /**
      * makes deposits into the balance
      * @param amount the amount of money
      */
     public void deposit(double amount, TransactionType type) {
+        if (closed) {
+            System.out.println("Cannot deposit: Account is closed.");
+            return;
+        }
         balance += amount;
         transactions.add(new Transaction(type.name(),amount, LocalDateTime.now()));
     }
@@ -31,6 +55,10 @@ abstract class Account {
      * @param amount the amount that the customer wants to withdraw
      */
     public void withdraw(double amount) {
+        if (closed) {
+            System.out.println("Cannot withdraw: Account is closed.");
+            return;
+        }
         if (amount > balance) {
             System.out.println("Withdrawal denied: Insufficient funds.");
             return;
@@ -67,6 +95,27 @@ abstract class Account {
         if (!found) {
             System.out.println("No transactions found for type: " + type);
         }
+    }
+
+    /**
+     *Attempts to close the account. An account may only be closed if its balance is zero.
+     *Once closed, no further deposits or withdrawals will be allowed.
+     */
+    public void closeAccount() {
+        if (balance != 0) {
+            System.out.println("Cannot close account: Balance is not zero.");
+            return;
+        }
+        closed = true;
+        System.out.println("Account has been closed.");
+    }
+
+    /**
+     *Checks whether the account is currently closed.
+     * @return true if the account is closed; false otherwise
+     */
+    public boolean isClosed() {
+        return closed;
     }
     @Override
     public boolean equals(Object o) {

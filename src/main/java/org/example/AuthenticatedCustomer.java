@@ -7,7 +7,13 @@ public class AuthenticatedCustomer extends Costumer implements LoginSystem{
         super(name, account);
     }
 
-
+    /**
+     *Attempts to authenticate the customer using the provided username and password.
+     *If authentication is successful, the customer is marked as logged in
+     * @param username the login username to authenticate.
+     * @param password the login password to authenticate.
+     * @return true if the login is successful and the account is open; false otherwise.
+     */
     @Override
     public boolean login(String username, String password) {
         if (InMemoryLoginStore.validate(username, password)) {
@@ -20,6 +26,9 @@ public class AuthenticatedCustomer extends Costumer implements LoginSystem{
         }
     }
 
+    /**
+     *Logs out the currently authenticated customer and updates login state.
+     */
     @Override
     public void logout() {
         loggedIn = false;

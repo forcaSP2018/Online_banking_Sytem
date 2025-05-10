@@ -7,6 +7,12 @@ import java.util.Map;
 public class InMemoryLoginStore {
     private static final Map<String, String> credentials = new HashMap<>();
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     public static boolean register(String username, String password) {
         String key = username.toLowerCase();
         if (credentials.containsKey(key)) {
@@ -20,6 +26,12 @@ public class InMemoryLoginStore {
         }
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     public static boolean validate(String username, String password) {
         String key = username.toLowerCase();
         return credentials.containsKey(key) && credentials.get(key).equals(password);
