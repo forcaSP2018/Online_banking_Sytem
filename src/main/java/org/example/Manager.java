@@ -12,7 +12,7 @@ public class Manager extends User implements AccessControllable{
     }
 
     /**
-     * this allows manager to audit the account and determine if they should should take into review or disable it all together
+     * this allows manager to audit the account and determine if they should take into review or disable it all together
      * @param account looks at the users account
      */
     public void auditAccount(Account account) {
