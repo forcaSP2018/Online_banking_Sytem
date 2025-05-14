@@ -1,0 +1,72 @@
+Project Report: Online Banking System 
+Table of Contents 
+1. Project Description 
+2. Functional Requirements - 2.1 Customer Functionalities - 2.2 Manager Functionalities 
+3. Expected Output 
+4. Project Hierarchy 
+5. Interfaces and Their Purpose 
+6. Runtime Polymorphism 
+7. TextIO Usage 
+8. Comparable and Comparator Usage 
+9. Program Features 
+10. Challenges Faced 
+11. Learning Outcomes 
+1. Project Description 
+The Online Banking System (OBS) is a terminal-based Java application that simulates the 
+functionality of an online banking platform. It supports two user roles: - Customers, who manage and view their banking data - Managers, who oversee customer activity and perform audits 
+Customers can: - View account details including type, balance, and interest rates - View full transaction history - Filter and group transactions (credit/debit) - Track the date of each deposit and withdrawal 
+Managers can: - View all customer activity logs 
+- Audit accounts and close them if necessary - Flag accounts with zero balance for administrative review 
+2. Functional Requirements 
+2.1 Customer Functionalities - View account details: Includes account type (Savings/Checking), current balance, and loan 
+interest rate - Access transaction history - Filter transactions by credit, debit, or specific types like salary or gift - Display the date (day/month/year) associated with each transaction 
+2.2 Manager Functionalities - Monitor activities of all customer accounts - Audit and view transaction logs - Flag and close accounts with zero balance 
+3. Expected Output 
+Customers should expect: - Clear output showing account type, balance, and interest rate - Full transaction history including types and timestamps - Grouped or filtered views of deposits/withdrawals - Real-time updates when transactions occur 
+Managers should expect: - Access to complete logs of customer actions - Ability to flag accounts with zero balance - Enforcement of access restrictions (read-only role) 
+4. Project Hierarchy - User (abstract class) 
+1.   Customer (extends User, Authenticatable) 
+├── SavingsAccount (extends Account) 
+└── CheckingAccount (extends Account) 
+2.   Manager (extends User,  implements Authenticatable) - Account (abstract class) 
+1.   deposit(), withdraw(), printTransactionHistory() 
+2.    closeAccount(), flagForReview(), isClosed() 
+3.    printTransactionsByType() - Transaction (implements Comparable) 
+1.     includes amount, type, date - TransactionAmountComparator (implements Comparator<Transaction>) 
+1. used to sort transactions by amount -   
+AccessControllable  (interface) 
+1. Purpose: Defines behavior for access-related control logic. 
+2. Implemented by: Manager 
+3. Key Methods: 
+3.1  retrieveLogs() 
+3.2 hasAccess(String operation) -  
+AuthenticatedManager (extendsManger, Implements: Authenticatable) 
+1. Adds login/logout capabilities to the manager. - - 
+AuthenticatedCustomer (extends Customer, Implements: Authenticatable) 
+1. Adds secure authentication to the customer class, including login 
+restrictions (e.g., blocking closed accounts). 
+InMemoryLoginStore (class) 
+1. Purpose: Stores and validates username/password combinations. 
+2. Simulates a lightweight login database. 
+3. Used in AuthenticatedCustomer and AuthenticatedManager - UserLoader 
+1.    reads user roles and credentials from file and creates objects accordingly 
+5. Interfaces and Their Purpose 
+AccessControlable -provides retriveLogs() and hasAccess(String operation)  
+LoginSystem - Provides login() and logout() contracts for role-based identity validation - Implemented by both Customer and Manager subclasses 
+6. Runtime Polymorphism - Account is abstract and has an abstract method getInterestRate(), overridden by 
+SavingsAccount and CheckingAccount. - BankUser interface defines behavior such as viewing account info, implemented 
+differently by Customer and Manager. 
+7. TextIO Usage - Application uses Scanner for TextIO-based interaction. - Files are read to create users and accounts. - Menus prompt the user to select operations and provide feedback. 
+8. Comparable and Comparator Usage - Transaction implements Comparable<Transaction> to sort by date using compareTo(). - TransactionAmountComparator implements Comparator<Transaction> to allow sorting 
+by amount. 
+9. Program Features - Secure login system with credential validation - Transaction filtering by credit, debit, and type - Real-time balance updates upon deposit and withdrawal - Flagging and closing of zero-balance accounts - Log retrieval for audit purposes - Console-based interface for all interactions 
+10. Challenges Faced 
+Technical Challenges: - Dynamic authentication without preloaded credentials - Flexible transaction typing using enums - Preventing activity on closed accounts - Designing polymorphic transaction handling - Implementing Comparable and Comparator logic 
+Limitations: - In-memory transaction handling (no persistent database) - No admin-level user creation or deletion features - Plaintext password handling for simplicity 
+11. What I learned 
+1. Mastery of Object-Oriented Design: - Designed and implemented abstract classes and interfaces - Practiced runtime polymorphism and interface segregation 
+2. Clean Code Architecture: - Applied modularity and separation of concerns - Used clear structure and role-specific classes 
+3. Exception Handling and Validation: - Protected against invalid transactions and unauthorized actions 
+4. JUnit Testing: - Built comprehensive test suites - Validated business logic and edge cases 
+5. Terminal I/O and File Handling: - Managed structured input/output for user simulation 
+6. Collaborative Design and Adaptability: - Refined system structure through iterative testing - Ensured maintainability and extensibility for future features
